@@ -16,4 +16,20 @@ public class Region {
                 ", regionName='" + regionName + '\'' +
                 '}';
     }
+
+    public Integer getRegionCode() {
+        return regionCode;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionCode(Integer regionCode) {
+        this.regionCode = regionCode;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
 }
