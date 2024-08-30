@@ -2,11 +2,14 @@ package com.art.service;
 
 import com.art.dao.RegionDao;
 import com.art.entity.Region;
+import com.art.exception.RegionNotFoundException;
+//import com.art.test.RegionNotFoundExceptionSuplaer;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @Service
 public class RegionServiceImpl implements RegionService {
@@ -17,13 +20,13 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public List<Region> findAll()  {
+    public List<Region> findAll() {
         return regionDao.findAll();
     }
 
     @Override
-    public Region findByRegionCode(int regionCode)  {
-        return regionDao.findByRegionCode(regionCode).orElseThrow(()->new RuntimeException("Region not Found"));
+    public Region findByRegionCode(int regionCode) {
+        return regionDao.findByRegionCode(regionCode).orElseThrow(RegionNotFoundException::new);
     }
 
     @Override

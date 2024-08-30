@@ -41,7 +41,6 @@ public class RegionController {
         regionService.delete(regionCode);
     }
 
-
     @PutMapping("/api/v1/region/{regionCode}")
     public void update(@PathVariable int regionCode, @RequestBody String regionName)  {
         regionService.update(regionCode, regionName);
