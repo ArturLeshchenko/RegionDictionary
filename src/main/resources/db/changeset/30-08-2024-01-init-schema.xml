@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="30-08-2024-01-init-schema" author="Artur Leshchenko">
+        <createTable tableName="region" remarks="Table of regions">
+            <column name="region_code" type="integer" remarks="Code of region">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="region_name" type="text" remarks="Name of region">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
