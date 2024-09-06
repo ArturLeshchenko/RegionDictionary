@@ -18,4 +18,12 @@ public class RegionExceptionHandler {
         e.printStackTrace();
         return e.getMessage();
     }
+
+    @ExceptionHandler(RegionAlreadyExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String regionAlreadyExistExceptionHandler(RegionAlreadyExistException e) {
+        LOGGER.error(e.getMessage());
+        e.printStackTrace();
+        return e.getMessage();
+    }
 }

@@ -5,3 +5,5 @@ spring:
     password: postgres
   liquibase:
     change-log: classpath:/db/liquibase-changelog.xml
+  jpa:
+    show-sql: true

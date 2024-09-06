@@ -1,42 +1,52 @@
 package com.art.service;
 
-import com.art.dao.RegionDao;
 import com.art.entity.Region;
+import com.art.exception.RegionAlreadyExistException;
 import com.art.exception.RegionNotFoundException;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.art.repository.RegionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RegionServiceImpl implements RegionService {
-    private final RegionDao regionDao;
-    public RegionServiceImpl(@Qualifier("regionDaoJPA") RegionDao regionDao) {
-        this.regionDao = regionDao;
+    private final RegionRepository regionRepository;
+
+    public RegionServiceImpl(RegionRepository regionRepository) {
+        this.regionRepository = regionRepository;
     }
 
     @Override
     public List<Region> findAll() {
-        return regionDao.findAll();
+        return regionRepository.findAll();
     }
 
     @Override
     public Region findByRegionCode(int regionCode) {
-        return regionDao.findByRegionCode(regionCode).orElseThrow(RegionNotFoundException::new);
+        return regionRepository.findById(regionCode).orElseThrow(RegionNotFoundException::new);
     }
 
     @Override
     public void save(Region region) {
-        regionDao.save(region);
+        boolean isExists = regionRepository.existsById(region.getRegionCode());
+        if (isExists) {
+            throw new RegionAlreadyExistException();
+        }
+        regionRepository.save(region);
     }
 
     @Override
     public void update(int regionCode, String regionName) {
-        regionDao.update(regionCode, regionName);
+        boolean isExists = regionRepository.existsById(regionCode);
+        if (!isExists) {
+            throw new RegionNotFoundException();
+        }
+        regionRepository.save(new Region(regionCode, regionName));
     }
 
     @Override
     public void delete(int regionCode) {
-        regionDao.delete(regionCode);
+        regionRepository.deleteById(regionCode);
     }
 }
