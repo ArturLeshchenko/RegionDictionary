@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: regions
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  regions:
+    build: .
+    ports:
+      - 3001:5055
