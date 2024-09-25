@@ -1,0 +1,121 @@
+openapi: 3.0.1
+info:
+  title: region-service
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: RegionController
+    description: Контроллер для работы со справачником регионов
+paths:
+  /api/v1/regions:
+    get:
+      tags:
+        - RegionController
+      summary: Find all regions
+      description: Find all regions
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/Region'
+
+        '500':
+          description: Internal server error
+
+  /api/v1/region:
+    post:
+      tags:
+        - RegionController
+      summary: Save region
+      description: Save region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Region'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Region already exist
+        '500':
+          description: Internal server error
+
+
+  /api/v1/region/{regionCode}:
+    parameters:
+      - name: regionCode
+        in: path
+        required: true
+        description: код региона
+        schema:
+          type: integer
+          example: 11
+
+    get:
+      tags:
+        - RegionController
+
+      summary: Find region by region code
+      description: Find region by region code
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Region'
+        '500':
+          description: Internal server error
+        '404':
+          description: Region not found
+
+    put:
+      tags:
+        - RegionController
+      summary: Update region name by region code
+      description: Update region name by region code
+      requestBody:
+        content:
+          text:
+            example: "Краснодар"
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: Internal server error
+        '404':
+          description: Region not found
+
+    delete:
+      tags:
+        - RegionController
+      summary: Delete region by region code
+      description: Delete region by region code
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: Internal server error
+
+
+
+components:
+  schemas:
+    Region:
+      type: object
+      properties:
+        regionCode:
+          type: integer
+          example: 23
+          description: regionCode региона
+        regionName:
+          type: string
+          example: Краснодарский край
+          description: Имя региона
